@@ -27,8 +27,8 @@ cd fastapi-docker-app
 docker build -t fastapi-app .
 # for multi-arch builds
 docker buildx build --platform linux/amd64,linux/arm64 -t fastapi-app .
-docker buildx build --platform linux/amd64,linux/arm64 -t <your-registry>/fastapi-demo:latest --push .
-docker buildx build --platform linux/amd64,linux/arm64 -t ghcr.io/pauldjmetsi/fastapi-demo:latest --push .
+docker buildx build --platform linux/amd64,linux/arm64 -t <your-registry>/fastapi-docker-app:latest --push .
+docker buildx build --platform linux/amd64,linux/arm64 -t ghcr.io/pauldjmetsi/fastapi-docker-app:latest --push .
 
 # login to ghcr.io
 echo $GITHUB_TOKEN | docker login ghcr.io -u <username> --password-stdin
