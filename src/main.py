@@ -11,7 +11,7 @@ API_KEY = os.getenv("API_KEY", "defaultkey")
 
 @app.get("/")
 def root():
-    return {"message": f"{APP_NAME} running in {APP_ENV} v2"}
+    return {"message": f"{APP_NAME} running in {APP_ENV}"}
 
 @app.get("/config")
 def config():
