@@ -34,6 +34,10 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
+      # Create short SHA
+      - name: Set short SHA
+        run: echo "SHORT_SHA=${GITHUB_SHA::7}" >> $GITHUB_ENV
+
       # Build and Push
       - name: Build and Push Docker Image
         uses: docker/build-push-action@v5
@@ -43,7 +47,7 @@ jobs:
           platforms: linux/amd64,linux/arm64
           tags: |
             ghcr.io/${{ github.repository }}:latest
-            ghcr.io/${{ github.repository }}:${{ github.sha }}
+            ghcr.io/${{ github.repository }}:${{ env.SHORT_SHA }}
 
       # Checkout GitOps repo
       - name: Checkout GitOps Repo
@@ -56,7 +60,7 @@ jobs:
       # Update image tag
       - name: Update HelmRelease Image Tag
         run: |
-          sed -i 's/tag: ".*"/tag: "${{ github.sha }}"/' gitops/clusters/dev/helmrelease.yaml
+          sed -i 's/tag: ".*"/tag: "${{ env.SHORT_SHA }}"/' gitops/clusters/dev/helmrelease.yaml
 
       # Commit and Push changes
       - name: Commit and Push
